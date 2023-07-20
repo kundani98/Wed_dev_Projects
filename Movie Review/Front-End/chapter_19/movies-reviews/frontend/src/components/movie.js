@@ -53,7 +53,7 @@ const Movie = props => {
                         </Card>
                         <br></br>
                         <h2>Reviews</h2>
-                        <br></br>
+                        <br> </br>
                         {movie.reviews.map((review, index) => {
                             return (
                                 <Media key={index}>
