@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Media from 'react-bootstrap/Media';
+import moment from 'moment';
 
 const Movie = props => {
 
@@ -53,7 +54,7 @@ const Movie = props => {
                         </Card>
                         <br></br>
                         <h2>Reviews</h2>
-                        <br> </br>
+                        <br></br>
                         {movie.reviews.map((review, index) => {
                             return (
                                 <Media key={index}>

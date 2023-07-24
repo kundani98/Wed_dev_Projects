@@ -167,7 +167,7 @@ const MoviesList = props => {
                         )
                     })}
                 </Row>
-                <br />
+               <br></br>
                 Showing page: {currentPage}.
                 <Button
                     variant="link"

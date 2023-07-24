@@ -32,13 +32,13 @@ router.post('/login', async (req, res) => {
 
         !user && res.status(401).json("Wrong User Name");
 
-        const hashedPassword = CryptoJS.AES.decrypt(
-            user.password,
-            process.env.PASS_SEC
-        );
+        const hashedPassword = user.password
+            
+            
+       
 
 
-        const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
+        const originalPassword = hashedPassword
 
         const inputPassword = req.body.password;
         
