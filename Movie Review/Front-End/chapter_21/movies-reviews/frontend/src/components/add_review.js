@@ -3,6 +3,8 @@ import MovieDataService from "../services/movies"
 import { Link } from "react-router-dom"
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Media from 'react-bootstrap/Media';
+
 const AddReview = props => {
     let editing = false
     let initialReviewState = ""

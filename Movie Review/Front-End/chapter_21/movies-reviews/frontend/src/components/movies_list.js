@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
-
+import Media from 'react-bootstrap/Media';
 //The useEffect hook is called after the component renders
 // So if we want any code to run after rendering, we put it here
 //NB: Specify an empty array in 2nd argument of useEffect.
