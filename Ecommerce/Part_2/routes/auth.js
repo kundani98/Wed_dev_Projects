@@ -8,10 +8,12 @@ router.post("/register", async (req, res) => {
   const newUser = new User({
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password
- 
+    password: CryptoJS.AES.encrypt(
+      req.body.password,
+      process.env.PASS_SEC
+    ).toString(),
   });
-  
+
   try {
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
@@ -32,13 +34,13 @@ router.post('/login', async (req, res) => {
 
         !user && res.status(401).json("Wrong User Name");
 
-        const hashedPassword = user.password
-            
-            
-       
+        const hashedPassword = CryptoJS.AES.decrypt(
+            user.password,
+            process.env.PASS_SEC
+        );
 
 
-        const originalPassword = hashedPassword
+        const originalPassword = hashedPassword.toString(CryptoJS.enc.Utf8);
 
         const inputPassword = req.body.password;
         
