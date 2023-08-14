@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/products/:category">
           <ProductList />
         </Route>
-        <Route path="/product/:id">
+        <Route path="/product/:id"> 
           <Product />
         </Route>
         <Route path="/cart">
@@ -37,6 +37,14 @@ const App = () => {
         <Route path="/register">
           {user ? <Redirect to="/" /> : <Register />}
         </Route>
+
+        {/* <Route path="/completion">
+          <Success />
+        </Route>
+
+        <Route path="*">
+          <NotFoundPage />
+        </Route> */}
       </Switch>
     </Router>
   );

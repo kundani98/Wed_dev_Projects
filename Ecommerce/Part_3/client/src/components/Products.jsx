@@ -1,70 +1,81 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import { popularProducts } from "../data";
-import Product from "./Product";
-import axios from "axios";
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components';
+import Product from './Product';
+import axios from 'axios';
 
 const Container = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
 `;
 
-const Products = ({ cat, filters, sort }) => {
+const Products = ({cat,filters,sort}) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  console.log("Fetching products")
+
 
   useEffect(() => {
-    const getProducts = async () => {
+    const getProducts = async () => {            
       try {
-        const res = await axios.get(
-          cat
-            ? `http://localhost:5000/api/products?category=${cat}`
-            : "http://localhost:5000/api/products"
-        );
-        setProducts(res.data);
-      } catch (err) {}
+        const urlRequest = `http://localhost:3000/api/v1/products?category=${cat}`;
+        console.log("Making Request to", urlRequest);
+        const res = await axios.get(urlRequest);
+        setProducts(res.data)
+      } catch (err) {
+        console.log("Error occurred fetching products", err);
+      }
     };
     getProducts();
-  }, [cat]);
+  }, [cat,filters,sort]);
 
   useEffect(() => {
-    cat &&
-      setFilteredProducts(
-        products.filter((item) =>
-          Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value)
-          )
-        )
-      );
-  }, [products, cat, filters]);
+    
+  }, [sort])
 
   useEffect(() => {
-    if (sort === "newest") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.createdAt - b.createdAt)
-      );
+    cat && setFilteredProducts(
+      products.filter((item) => Object.entries(filters).every(([key,value]) => {
+        const filterKey = key.toLowerCase();
+        const filterValue = value.toLowerCase();
+        const product = item[filterKey];
+
+        console.log("Key & Value", filterKey, filterValue);
+        return product.includes(filterValue)
+      }
+      ))
+    );
+  }
+  , [products,cat,filters])
+
+  useEffect(() => {
+    if (sort === "new") {
+      setFilteredProducts(prev => {
+        // sort from newest to oldest
+        return [...prev].sort((a,b) => a.createdAt - b.createdAt)
+      })
     } else if (sort === "asc") {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => a.price - b.price)
-      );
+      setFilteredProducts(prev => {
+        // sort from lowest to highest
+        return [...prev].sort((a,b) => a.price - b.price)
+      })  
     } else {
-      setFilteredProducts((prev) =>
-        [...prev].sort((a, b) => b.price - a.price)
-      );
+      setFilteredProducts(prev => {
+        // sort from highest to lowest
+        return [...prev].sort((a,b) => b.price - a.price)
+      }) 
     }
-  }, [sort]);
+  }, [sort]
+  )
 
   return (
     <Container>
-      {cat
-        ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
-        : products
-            .slice(0, 8)
-            .map((item) => <Product item={item} key={item.id} />)}
+        {cat 
+          ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
+          : products.slice(0,8).map((item) => <Product item={item} key={item.id} />
+        )}       
     </Container>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products
