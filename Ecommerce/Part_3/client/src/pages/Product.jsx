@@ -123,6 +123,7 @@ const Button = styled.button`
 const Product = () => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
+  console.log(id);
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
@@ -165,12 +166,12 @@ const Product = () => {
           <Desc>{product.desc}</Desc>
           <Price>$ {product.price}</Price>
           <FilterContainer>
-            <Filter>
+            {/* <Filter>
               <FilterTitle>Color</FilterTitle>
               {product.color?.map((c) => (
                 <FilterColor color={c} key={c} onClick={() => setColor(c)} />
               ))}
-            </Filter>
+            </Filter> */}
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize onChange={(e) => setSize(e.target.value)}>
